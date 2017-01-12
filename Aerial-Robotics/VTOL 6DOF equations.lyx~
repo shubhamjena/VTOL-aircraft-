@@ -1,0 +1,753 @@
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\topmargin 1cm
+\bottommargin 1cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+6 -DOF EQUATIONS FOR A VTOL AIRCRAFT
+\end_layout
+
+\begin_layout Date
+October 1,2017
+\end_layout
+
+\begin_layout Abstract
+This paper presents the equations of motion during vertical take-off/landing
+ of a fixed wing VTOL aircraft and proposes a PI controller for controlling
+ the hovering motion.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+
+\shape italic
+List of symbols used
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\shape italic
+T
+\series default
+ : Thrust force due to vertical rotor
+\end_layout
+
+\begin_layout Itemize
+
+\shape italic
+\begin_inset Formula $\boldsymbol{\alpha}$
+\end_inset
+
+: Deflection of keel
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\shape italic
+\begin_inset Formula $\boldsymbol{F(T_{,},\alpha)}$
+\end_inset
+
+
+\series default
+ : Force produced by keel 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\shape italic
+\begin_inset Formula $\boldsymbol{^{a}\boldsymbol{R}_{b}}$
+\end_inset
+
+
+\series default
+ : Rotation Matrix for rotaion from body axes to inertial axes.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\shape italic
+I
+\series default
+ : Moment of Inertia tensor referred to the body axes b1, b2, b3.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\shape italic
+\begin_inset Formula $\boldsymbol{\phi}$
+\end_inset
+
+
+\series default
+= roll angle, 
+\begin_inset Formula $\boldsymbol{\theta}$
+\end_inset
+
+= pitch angle, 
+\begin_inset Formula $\boldsymbol{\psi}$
+\end_inset
+
+= yaw angle, 
+\series bold
+p
+\series default
+ = roll rate, 
+\series bold
+q
+\series default
+ = pitch rate, 
+\series bold
+r
+\series default
+ = yaw rate
+\end_layout
+
+\begin_layout Section
+Equations of motion
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename C:/Users/Shubham/Pictures/Saved Pictures/VTOL_edited.jpg
+	scale 60
+	rotateOrigin centerTop
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Force equations
+\end_layout
+
+\begin_layout Standard
+Moments acting along the positive directions of the body axes are taken
+ positive.
+ 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ is taken positive if it produces a positive moment.
+ 
+\end_layout
+
+\begin_layout Subsubsection*
+\begin_inset Formula $\begin{bmatrix}m\ddot{x_{1}}\\
+m\ddot{y_{2}}\\
+m\ddot{z_{3}}
+\end{bmatrix}$
+\end_inset
+
+=
+\begin_inset Formula $\begin{bmatrix}0\\
+0\\
+-mg
+\end{bmatrix}$
+\end_inset
+
+ +
+\begin_inset Formula $^{a}\boldsymbol{R}_{b}$
+\end_inset
+
+
+\begin_inset Formula $\left[\begin{array}{c}
+0\\
+F(T_{1,}\alpha_{1})cos\alpha_{1}+F(T_{2,}\alpha_{2})cos\alpha_{2}\\
+T_{1}+T_{2}-F(T_{1,}\alpha_{1})sin\alpha_{1}-F(T_{2,}\alpha_{2})sin\alpha_{2}
+\end{array}\right]$
+\end_inset
+
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Moment equations
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+l 
+\series default
+is the distance between CG of the aircraft and COP of the keel.
+ 
+\series bold
+L 
+\series default
+is the distance beteen the two vertical rotors.
+\end_layout
+
+\begin_layout Subsubsection*
+\begin_inset Formula $\boldsymbol{I}\begin{bmatrix}\dot{p}\\
+\dot{q}\\
+\dot{r}
+\end{bmatrix}$
+\end_inset
+
+=
+\begin_inset Formula $\begin{bmatrix}\{F(T_{1,}\alpha_{1})cos\alpha_{1}+F(T_{2,}\alpha_{2})cos\alpha_{2}\}l\\
+(T_{2}-T_{1})L-\{F(T_{2,}\alpha_{2})sin\alpha_{2}-F(T_{1,}\alpha_{1})sin\alpha_{1}\}L\\
+\{F(T_{1,}\alpha_{1})cos\alpha_{1}-F(T_{2,}\alpha_{2})cos\alpha_{2}\}L+M_{2}-M_{1}
+\end{bmatrix}$
+\end_inset
+
+-
+\begin_inset Formula $\begin{bmatrix}p\\
+q\\
+r
+\end{bmatrix}$
+\end_inset
+
+ 
+\begin_inset Formula $\times$
+\end_inset
+
+ 
+\begin_inset Formula $\boldsymbol{I}\begin{bmatrix}p\\
+q\\
+r
+\end{bmatrix}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Relation between 
+\series bold
+\shape italic
+
+\begin_inset Formula $\boldsymbol{\phi}$
+\end_inset
+
+,
+\series default
+ 
+\begin_inset Formula $\boldsymbol{\theta}$
+\end_inset
+
+, 
+\begin_inset Formula $\boldsymbol{\psi}$
+\end_inset
+
+ 
+\series bold
+and p
+\series default
+ , 
+\series bold
+q
+\series default
+, 
+\series bold
+r
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\begin{bmatrix}p\\
+q\\
+r
+\end{bmatrix}$
+\end_inset
+
+=
+\begin_inset Formula $\begin{bmatrix}c\theta & 0 & -c\phi s\theta\\
+0 & 1 & s\phi\\
+s\theta & 0 & c\phi c\theta
+\end{bmatrix}$
+\end_inset
+
+
+\begin_inset Formula $\begin{bmatrix}\dot{\phi}\\
+\dot{\theta}\\
+\dot{\psi}
+\end{bmatrix}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Controller for attitude control during hover
+\end_layout
+
+\begin_layout Standard
+A Proportional+Integral controller is proposed for maintaining the roll,
+ pitch and yaw angles at 0 during hovering.
+ This would be crucial for transitioning from VTOL phase to cruise phase.
+ 
+\end_layout
+
+\begin_layout Subsection
+Control inputs
+\end_layout
+
+\begin_layout Standard
+The control inputs are defined as follows
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $u_{1}=F(T_{1,}\alpha_{1})cos\alpha_{1}+F(T_{2,}\alpha_{2})cos\alpha_{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $u_{2}=$
+\end_inset
+
+
+\begin_inset Formula $(T_{2}-T_{1})-\{F(T_{2,}\alpha_{2})sin\alpha_{2}-F(T_{1,}\alpha_{1})sin\alpha_{1}\}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $u_{3}=$
+\end_inset
+
+
+\begin_inset Formula $\{F(T_{1,}\alpha_{1})cos\alpha_{1}-F(T_{2,}\alpha_{2})cos\alpha_{2}\}+\frac{(M_{2}-M_{1})}{L}$
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Linearisation of moment equations about hover
+\end_layout
+
+\begin_layout Standard
+In hover phase, the following conditions will hold at equilibrium
+\end_layout
+
+\begin_layout Itemize
+T
+\begin_inset Formula $_{10}$
+\end_inset
+
+ = T
+\begin_inset Formula $_{20}$
+\end_inset
+
+ = 
+\begin_inset Formula $\frac{mg}{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\phi_{0}$
+\end_inset
+
+=
+\begin_inset Formula $\theta_{0}$
+\end_inset
+
+=
+\begin_inset Formula $\psi_{0}$
+\end_inset
+
+= 0, 
+\begin_inset Formula $p_{0}=q_{0}=r_{0}=0$
+\end_inset
+
+, 
+\begin_inset Formula $\dot{p_{0}}$
+\end_inset
+
+=
+\begin_inset Formula $\dot{q_{0}}$
+\end_inset
+
+=
+\begin_inset Formula $\dot{r_{0}}$
+\end_inset
+
+=0
+\end_layout
+
+\begin_layout Standard
+In addition, the following assumptions are made:
+\end_layout
+
+\begin_layout Itemize
+M = 
+\begin_inset Formula $\gamma$
+\end_inset
+
+T 
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $I_{xy}=I_{zy}=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The linearised moment equations are given by:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\begin{bmatrix}\ddot{\phi}\\
+\ddot{\theta}\\
+\ddot{\psi}
+\end{bmatrix}$
+\end_inset
+
+= 
+\begin_inset Formula $\begin{bmatrix}\{F(T_{1,}\alpha_{1})cos\alpha_{1}+F(T_{2,}\alpha_{2})cos\alpha_{2}\}l/I_{xx}\\
+(T_{2}-T_{1})L/I_{yy}-\{F(T_{2,}\alpha_{2})sin\alpha_{2}-F(T_{1,}\alpha_{1})sin\alpha_{1}\}L/I_{yy}\\
+\{F(T_{1,}\alpha_{1})cos\alpha_{1}-F(T_{2,}\alpha_{2})cos\alpha_{2}\}\frac{L}{I_{zz}}+\frac{\text{\gamma}}{I_{zz}}\text{(\ensuremath{T_{2}}\ensuremath{-T_{1})}}
+\end{bmatrix}$
+\end_inset
+
+ =
+\begin_inset Formula $\begin{bmatrix}\frac{u_{1}l}{I_{xx}}\\
+\frac{u_{2}L}{I_{yy}}\\
+\frac{u_{3}L}{I_{zz}}
+\end{bmatrix}$
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Control law
+\end_layout
+
+\begin_layout Standard
+Based on the linearised moment equations, a control law can be defined as
+ follows:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $u_{1}=-K_{p\phi}\phi-K_{I\phi}\int\phi dt$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $u_{2}=-K_{p\theta}\theta-K_{I\theta}\int\theta dt$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $u_{3}=-K_{p\psi}\psi-K_{I\psi}\int\psi dt$
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Expressions for 
+\begin_inset Formula $\boldsymbol{T_{1},T_{2},\alpha_{1,}\alpha_{2}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+Expression for F
+\end_layout
+
+\begin_layout Standard
+A simplified expression for F is derived using Blade Element theory and
+ Conservation of Momentum principle and is given by:
+\end_layout
+
+\begin_layout Verse
+F= Tsin
+\begin_inset Formula $\alpha$
+\end_inset
+
+
+\begin_inset Formula $\times\frac{A}{\pi R^{2}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Here, A is the suface area of one face of the keel, R is the radius of the
+ rotor blade and T and 
+\begin_inset Formula $\alpha$
+\end_inset
+
+are as defined earlier.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Further, the following assumptions are made to obtain expressions for T
+ and 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ in terms of the control inputs u.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+cos
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 
+\begin_inset Formula $\simeq$
+\end_inset
+
+1, sin
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 
+\begin_inset Formula $\simeq\alpha$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+Equation for Roll
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+Assumption:
+\begin_inset Formula $T_{1}=T_{2}\simeq\frac{mg}{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\Rightarrow u_{1}\simeq\frac{mg}{2}$
+\end_inset
+
+
+\begin_inset Formula $\times$
+\end_inset
+
+
+\begin_inset Formula $\frac{A}{\pi R^{2}}(\alpha_{1}+\alpha_{2})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+Equation for Pitch
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+Assumption:
+\begin_inset Formula $\alpha_{1}\simeq\alpha_{2}\simeq0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\Rightarrow u_{2}\simeq(T_{2}-T_{1})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+Equation for Yaw
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+Assumption:
+\begin_inset Formula $T_{1}=T_{2}\simeq\frac{mg}{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\Rightarrow u_{3}\simeq\frac{mg}{2}\times\frac{A}{\pi R^{2}}(\alpha_{1}-\alpha_{2})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+Force equation along vertical axis
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+Assumption:
+\begin_inset Formula $\phi=\theta\simeq0,\ddot{r_{3}}=0,\alpha_{1}=\alpha_{2}\simeq0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\Rightarrow T_{1}+T_{2}=mg$
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Thus,
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $T_{1}=\frac{mg-u_{2}}{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $T_{2}=\frac{mg+u_{2}}{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\alpha_{1}=\frac{\pi R^{2}}{A}(u_{1}+u_{3})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\alpha_{2}=\frac{\pi R^{2}}{A}(u_{1}-u_{3})$
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
